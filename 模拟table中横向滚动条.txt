@@ -1,0 +1,22 @@
+思路：当页面内容过多，不足以显示表格中的内容，并且表格内部有横向滚动条时，当窗口没有滚动到表格横向滚动条位置时，模拟生成一个
+横向滚动条至于页面底部，实现横向滚动功能，当竖向滚动条滚动到表格横向滚动条位置时，模拟滚动条消失 
+$(".dlshouwen_grid_body").append("<div class='simulation-scroll none'><div class='scroll-content'></div></div>");
+                            $(".scroll-content").width($(".dlshouwen_grid_body .dlshouwen-grid").width());
+                            $(".simulation-scroll").width($(".dlshouwen_grid_body").width());
+                            if(whole_height<table_height+table_top){
+                                $(".simulation-scroll").removeClass("none");
+                            }
+                            $(window).scroll(function(){
+                                scroll_top=get_scrollTop();
+                                if(table_height+table_top<=whole_height+scroll_top){
+                                    $(".simulation-scroll").addClass("none");
+                                }
+                                else{
+                                    $(".simulation-scroll").removeClass("none");
+                                }
+                            })
+                            //当模拟的横向滚动条滚动时，表格滚动
+                            $(".simulation-scroll").scroll(function(){
+                                var scroll_left=$(this).scrollLeft();
+                                $(".dlshouwen_grid_body").scrollLeft(scroll_left);
+                            })
